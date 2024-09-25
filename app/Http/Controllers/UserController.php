@@ -26,18 +26,32 @@ class UserController extends Controller
      *         in="query",
      *         description="User's email",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="string", format="email")
      *     ),
      *     @OA\Parameter(
      *         name="password",
      *         in="query",
      *         description="User's password",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="string", format="password")
      *     ),
-     *     @OA\Response(response="201", description="User registered successfully"),
-     *     @OA\Response(response="400", description="Processing errors"),
-     *     @OA\Response(response="422", description="Validation errors")
+     *     @OA\Response(
+     *         response=201,
+     *         description="User registered successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="boolean", example=true),
+     *             @OA\Property(property="user", type="object",
+     *                 @OA\Property(property="id", type="integer", example=1),
+     *                 @OA\Property(property="name", type="string", example="Nome do Usuário"),
+     *                 @OA\Property(property="email", type="string", example="usuario@exemplo.com")
+     *             ),
+     *             @OA\Property(property="token", type="string", example="jwt.token.here"),
+     *             @OA\Property(property="message", type="string", example="Usuario cadastrado com sucesso")
+     *         )
+     *     ),
+     *     @OA\Response(response=400, description="Processing errors"),
+     *     @OA\Response(response=422, description="Validation errors")
      * )
      */
     public function register(UserRequest $request)

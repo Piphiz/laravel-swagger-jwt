@@ -10,7 +10,6 @@ use Tymon\JWTAuth\Exceptions\JWTException;
 class AuthController extends Controller
 {
     /**
-     *
      * @OA\Post(
      *     tags={"Auth"},
      *     path="/api/login",
@@ -20,19 +19,26 @@ class AuthController extends Controller
      *         in="query",
      *         description="User's email",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="string", format="email")
      *     ),
      *     @OA\Parameter(
      *         name="password",
      *         in="query",
      *         description="User's password",
      *         required=true,
-     *         @OA\Schema(type="string")
+     *         @OA\Schema(type="string", format="password")
      *     ),
-     *     @OA\Response(response="200", description="Login successful"),
-     *     @OA\Response(response="401", description="Invalid credentials")
+     *     @OA\Response(
+     *         response=200,
+     *         description="Login successful",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="token", type="string", example="jwt.token.here")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Invalid credentials"),
+     *     @OA\Response(response=500, description="Could not create token")
      * )
-     *
      */
     public function login(Request $request)
     {
@@ -54,15 +60,21 @@ class AuthController extends Controller
     }
 
     /**
-     *
      * @OA\Post(
      *     tags={"Auth"},
      *     path="/api/logout",
      *     summary="Logout user",
-     *     @OA\Response(response="200", description="Success"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Logout bem-sucedido",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", example="Logout bem-sucedido")
+     *         )
+     *     ),
+     *     @OA\Response(response=500, description="Erro ao realizar logout"),
      *     security={{"bearerAuth":{}}}
      * )
-     *
      */
     public function logout(Request $request)
     {
