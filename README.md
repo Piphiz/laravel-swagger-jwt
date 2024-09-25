@@ -23,7 +23,7 @@ Este projeto é uma API desenvolvida em Laravel com autenticação JWT e documen
 1. Clone este repositório:
 
     ```bash
-    git clone https://github.com/seu-usuario/seu-repositorio.git
+    git clone https://github.com/Piphiz/laravel-swagger-jwt
     ```
 
 2. Instale as dependências:
